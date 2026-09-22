@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BookSphere - Smart Online Book Explorer">
+    <title>BookSphere | Online Book Explorer</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar navbar-expand-lg sticky-top" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">
+                <i class="bi bi-book-half"></i> BookSphere
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#books">Books</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#categories">Categories</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="#favorites">
+                            Favorites
+                            <span class="badge rounded-pill text-bg-danger favorite-count">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#registration">Register Book</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item ms-lg-2">
+                        <button class="btn btn-sm theme-toggle" id="themeToggle" title="Toggle dark mode">
+                            <i class="bi bi-moon-stars-fill"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= HERO ================= -->
+    <header id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <span class="hero-badge">
+                        <i class="bi bi-stars"></i> Smart Digital Library
+                    </span>
+                    <h1>Discover Your <span>Next Great Book</span></h1>
+                    <p class="hero-text">
+                        Explore programming, database, web development, AI and fiction books
+                        in one simple digital library.
+                    </p>
+
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="searchInput"
+                               placeholder="Search by book, author or category...">
+                        <button class="btn btn-primary" id="clearSearch">Clear</button>
+                    </div>
+
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-lg" id="surpriseBtn">
+                            <i class="bi bi-shuffle"></i> Surprise Me
+                        </button>
+                        <a href="#books" class="btn btn-outline-primary btn-lg">
+                            Explore Books
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="hero-visual">
+                        <div class="floating-book book-one"><i class="bi bi-book"></i></div>
+                        <div class="floating-book book-two"><i class="bi bi-journal-bookmark"></i></div>
+                        <div class="floating-book book-three"><i class="bi bi-book-half"></i></div>
+                        <div class="hero-circle">
+                            <i class="bi bi-bookshelf"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= STATS ================= -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row g-3 text-center">
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <i class="bi bi-book"></i>
+                        <h3 id="bookStat">6+</h3>
+                        <p>Books</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <i class="bi bi-grid"></i>
+                        <h3>5</h3>
+                        <p>Categories</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <i class="bi bi-star-fill"></i>
+                        <h3>4.7</h3>
+                        <p>Avg. Rating</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <i class="bi bi-heart-fill"></i>
+                        <h3 id="favoriteStat">0</h3>
+                        <p>Favorites</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TRENDING ================= -->
+    <section class="section-padding" id="trending">
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">POPULAR NOW</span>
+                    <h2>🔥 Trending Books</h2>
+                </div>
+                <span class="small text-muted">Popular picks from our collection</span>
+            </div>
+            <div class="row g-4" id="trendingContainer"></div>
+        </div>
+    </section>
+
+    <!-- ================= BOOKS ================= -->
+    <section class="section-padding books-section" id="books">
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">EXPLORE</span>
+                    <h2>📚 Our Book Collection</h2>
+                </div>
+                <span class="small text-muted" id="resultCount"></span>
+            </div>
+
+            <div class="filter-panel">
+                <div class="row g-3 align-items-center">
+                    <div class="col-lg-5">
+                        <label class="form-label fw-semibold">Search</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" id="bookSearch"
+                                   placeholder="Search books...">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label class="form-label fw-semibold">Category</label>
+                        <select class="form-select" id="categoryFilter">
+                            <option value="All">All Categories</option>
+                            <option value="Programming">Programming</option>
+                            <option value="Database">Database</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Artificial Intelligence">Artificial Intelligence</option>
+                            <option value="Fiction">Fiction</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <label class="form-label fw-semibold">Sort By</label>
+                        <select class="form-select" id="sortFilter">
+                            <option value="default">Featured</option>
+                            <option value="rating">Highest Rating</option>
+                            <option value="priceLow">Price: Low to High</option>
+                            <option value="priceHigh">Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 mt-1" id="bookContainer"></div>
+
+            <div id="noResults" class="empty-state d-none">
+                <i class="bi bi-search"></i>
+                <h4>No books found</h4>
+                <p>Try another search term or category.</p>
+                <button class="btn btn-primary" id="resetFilters">Reset Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CATEGORIES ================= -->
+    <section class="section-padding category-section" id="categories">
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">BROWSE</span>
+                    <h2>📂 Explore Categories</h2>
+                </div>
+            </div>
+
+            <div class="dropdown category-dropdown mb-4">
+                <button class="btn btn-primary dropdown-toggle" type="button"
+                        data-bs-toggle="dropdown">
+                    <i class="bi bi-filter"></i> Select Category
+                </button>
+                <ul class="dropdown-menu">
+                    <li><button class="dropdown-item category-option" data-category="All">All Categories</button></li>
+                    <li><button class="dropdown-item category-option" data-category="Programming">Programming</button></li>
+                    <li><button class="dropdown-item category-option" data-category="Database">Database</button></li>
+                    <li><button class="dropdown-item category-option" data-category="Web Development">Web Development</button></li>
+                    <li><button class="dropdown-item category-option" data-category="Artificial Intelligence">Artificial Intelligence</button></li>
+                    <li><button class="dropdown-item category-option" data-category="Fiction">Fiction</button></li>
+                </ul>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg">
+                    <button class="category-card w-100" data-category="Programming">
+                        <i class="bi bi-code-slash"></i>
+                        <h5>Programming</h5>
+                        <span>Code & Develop</span>
+                    </button>
+                </div>
+                <div class="col-md-6 col-lg">
+                    <button class="category-card w-100" data-category="Database">
+                        <i class="bi bi-database"></i>
+                        <h5>Database</h5>
+                        <span>Data & Storage</span>
+                    </button>
+                </div>
+                <div class="col-md-6 col-lg">
+                    <button class="category-card w-100" data-category="Web Development">
+                        <i class="bi bi-window-stack"></i>
+                        <h5>Web Development</h5>
+                        <span>Build the Web</span>
+                    </button>
+                </div>
+                <div class="col-md-6 col-lg">
+                    <button class="category-card w-100" data-category="Artificial Intelligence">
+                        <i class="bi bi-robot"></i>
+                        <h5>Artificial Intelligence</h5>
+                        <span>Explore AI</span>
+                    </button>
+                </div>
+                <div class="col-md-6 col-lg">
+                    <button class="category-card w-100" data-category="Fiction">
+                        <i class="bi bi-feather"></i>
+                        <h5>Fiction</h5>
+                        <span>Stories & Ideas</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FAVORITES ================= -->
+    <section class="section-padding" id="favorites">
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">YOUR LIBRARY</span>
+                    <h2>❤️ My Favorites</h2>
+                </div>
+            </div>
+            <div class="row g-4" id="favoritesContainer"></div>
+            <div id="emptyFavorites" class="empty-state">
+                <i class="bi bi-heart"></i>
+                <h4>Your favorites are empty</h4>
+                <p>Click the heart on any book to save it here.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= RECOMMENDATIONS ================= -->
+    <section class="section-padding recommendation-section">
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">SMART PICKS</span>
+                    <h2>🎯 Recommended for You</h2>
+                </div>
+                <span class="small text-muted">Based on popular categories</span>
+            </div>
+            <div class="row g-4" id="recommendationContainer"></div>
+        </div>
+    </section>
+
+    <!-- ================= REGISTRATION ================= -->
+    <section class="section-padding form-section" id="registration">
+        <div class="container">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">CONTRIBUTE</span>
+                    <h2>📝 Register a Book</h2>
+                </div>
+            </div>
+
+            <form id="bookForm" class="book-form" novalidate>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="bookName" class="form-label">Book Name *</label>
+                        <input type="text" id="bookName" class="form-control"
+                               placeholder="Enter book name" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="authorName" class="form-label">Author Name *</label>
+                        <input type="text" id="authorName" class="form-control"
+                               placeholder="Enter author name" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="isbn" class="form-label">ISBN *</label>
+                        <input type="text" id="isbn" class="form-control"
+                               placeholder="e.g. 9780132350884" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="bookCategory" class="form-label">Category *</label>
+                        <select id="bookCategory" class="form-select" required>
+                            <option value="">Select Category</option>
+                            <option>Programming</option>
+                            <option>Database</option>
+                            <option>Web Development</option>
+                            <option>Artificial Intelligence</option>
+                            <option>Fiction</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="bookPrice" class="form-label">Price (₹) *</label>
+                        <input type="number" id="bookPrice" class="form-control"
+                               min="0" placeholder="Enter price" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="availability" class="form-label">Availability *</label>
+                        <select id="availability" class="form-select" required>
+                            <option>Available</option>
+                            <option>Not Available</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="bookDescription" class="form-label">Book Description *</label>
+                        <textarea id="bookDescription" class="form-control" rows="4"
+                                  placeholder="Write a short description..." required></textarea>
+                    </div>
+
+                    <div class="col-12 d-flex gap-2 flex-wrap">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-plus-circle"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section-padding about-section" id="about">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <span class="section-label">ABOUT BOOKSPHERE</span>
+                    <h2>A smarter way to explore books.</h2>
+                    <p>
+                        BookSphere is a responsive digital library interface created
+                        for students to discover, filter, save and explore books
+                        from different categories.
+                    </p>
+                    <p>
+                        This project demonstrates HTML5, CSS3, Bootstrap, JavaScript,
+                        responsive design and basic client-side data persistence.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-card">
+                        <div><i class="bi bi-phone"></i><strong>Responsive</strong><span>Works on mobile and desktop</span></div>
+                        <div><i class="bi bi-lightning"></i><strong>Interactive</strong><span>Search, filter and explore</span></div>
+                        <div><i class="bi bi-heart"></i><strong>Personalized</strong><span>Save your favorite books</span></div>
+                        <div><i class="bi bi-moon-stars"></i><strong>Modern UI</strong><span>Light and dark themes</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-1">📚 <strong>BookSphere</strong> — Discover • Explore • Save • Read</p>
+            <small>Mini Project FSJP Lab | Online Book Explorer</small>
+        </div>
+    </footer>
+
+    <!-- ================= BOOK DETAILS MODAL ================= -->
+    <div class="modal fade" id="bookModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Book Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TOAST ================= -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="appToast" class="toast" role="alert">
+            <div class="toast-header">
+                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                <strong class="me-auto" id="toastTitle">BookSphere</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
